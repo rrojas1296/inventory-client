@@ -22,7 +22,7 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
 
-    // Adding @ Alias
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
