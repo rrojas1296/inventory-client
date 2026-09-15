@@ -3,12 +3,35 @@ import GoogleIcon from "@/modules/shared/components/icons/GoogleIcon";
 import Button from "@/modules/shared/components/shadcn/button";
 import { EyeIcon, Table2Icon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  loginControls,
+  loginSchema,
+  type LoginSchema,
+} from "../../schemas/loginSchema";
 
 const LoginPage = () => {
   const { t } = useTranslation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const loginUser = (data: LoginSchema) => {
+    console.log({ data });
+  };
+
   return (
     <div className="bg-bg-primary h-screen w-screen flex justify-center items-center">
-      <div className="w-10/12 flex flex-col gap-5">
+      <form
+        onSubmit={handleSubmit(loginUser)}
+        className="w-10/12 flex flex-col gap-5"
+      >
         <div className="size-10 rounded-xl bg-primary grid place-items-center">
           <Table2Icon className="text-text-accent size-5" />
         </div>
@@ -29,27 +52,32 @@ const LoginPage = () => {
             {t("Login.or")}
           </p>
         </div>
-        <FormField
-          label={t("Login.form.fields.email.label")}
-          placeholder={t("Login.form.fields.email.placeholder")}
-          type="email"
-        />
-        <FormField
-          label={t("Login.form.fields.password.label")}
-          placeholder={t("Login.form.fields.password.placeholder")}
-          type="password"
-          icon={
-            <Button
-              size="icon"
-              variant="ghost"
-              className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-transparent outline-none focus-visible:border-none"
-            >
-              <EyeIcon className="size-5 text-text-foreground-1" />
-            </Button>
-          }
-        />
-        <Button>{t("Login.buttons.submit")}</Button>
-      </div>
+        {loginControls.map(({ name, label, type, placeholder }, i) => {
+          const error = errors[name]?.message;
+          return (
+            <FormField
+              key={i}
+              label={t(label)}
+              placeholder={t(placeholder)}
+              type={type}
+              error={error && t(error)}
+              icon={
+                type === "password" && (
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-transparent outline-none focus-visible:border-none"
+                  >
+                    <EyeIcon className="size-5 text-text-foreground-1" />
+                  </Button>
+                )
+              }
+              {...register(name)}
+            />
+          );
+        })}
+        <Button type="submit">{t("Login.buttons.submit")}</Button>
+      </form>
     </div>
   );
 };
