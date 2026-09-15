@@ -36,5 +36,70 @@
       "title": "Impulsa tu negocio al siguiente nivel",
       "subtitle": "Gestiona, analiza y crece con herramientas diseñadas para escalar contigo."
     }
+  },
+  "Register": {
+    "title": "Crea tu cuenta",
+    "subtitle": "Empieza gratis sin ningún compromiso",
+    "side": {
+      "title": "Impulsa tu negocio al siguiente nivel",
+      "subtitle": "Gestiona, analiza y crece con herramientas diseñadas para escalar contigo."
+    },
+    "form": {
+      "terms": {
+        "text1": "Acepto los",
+        "link1": " Términos",
+        "text2": " y la",
+        "link2": " Política de Privacidad"
+      },
+      "buttons": {
+        "submit": "Crear cuenta",
+        "google": "Registrate con Google"
+      },
+      "login": {
+        "question": "¿Ya tienes una cuenta?",
+        "link": " Inicia sesión"
+      },
+      "or": "O ingresa con",
+      "fields": {
+        "email": {
+          "placeholder": "correo@gmail.com",
+          "label": "Correo",
+          "errors": {
+            "required": "El correo es requerido",
+            "email": "El correo debe ser válido"
+          }
+        },
+        "password": {
+          "placeholder": "***********",
+          "label": "Contraseña",
+          "errors": {
+            "required": "La contraseña es requerida",
+            "min": "La contraseña debe tener al menos 8 caracteres"
+          }
+        },
+        "firstName": {
+          "placeholder": "Nombre",
+          "label": "Nombre",
+          "errors": {
+            "required": "El nombre es requerido"
+          }
+        },
+        "lastName": {
+          "placeholder": "Apellido",
+          "label": "Apellido",
+          "errors": {
+            "required": "El apellido es requerido"
+          }
+        },
+        "confirmPassword": {
+          "placeholder": "***********",
+          "label": "Confirmar contraseña",
+          "errors": {
+            "required": "La contraseña es requerida",
+            "notMatch": "Las contraseñas no coinciden"
+          }
+        }
+      }
+    }
   }
 }
