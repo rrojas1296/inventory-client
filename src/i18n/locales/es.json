@@ -8,7 +8,7 @@
     },
     "register": {
       "question": "¿No tienes una cuenta?",
-      "link": "Regístrate"
+      "link": " Regístrate"
     },
     "or": "O ingresa con",
     "remember": "Recuérdame",
@@ -31,6 +31,10 @@
           }
         }
       }
+    },
+    "side": {
+      "title": "Impulsa tu negocio al siguiente nivel",
+      "subtitle": "Gestiona, analiza y crece con herramientas diseñadas para escalar contigo."
     }
   }
 }
