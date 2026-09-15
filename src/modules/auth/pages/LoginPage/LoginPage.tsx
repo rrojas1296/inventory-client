@@ -1,7 +1,7 @@
 import FormField from "@/modules/shared/components/FormField";
 import GoogleIcon from "@/modules/shared/components/icons/GoogleIcon";
 import Button from "@/modules/shared/components/shadcn/button";
-import { EyeIcon, Table2Icon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Table2Icon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,8 +10,13 @@ import {
   loginSchema,
   type LoginSchema,
 } from "../../schemas/loginSchema";
+import CheckBox from "@/modules/shared/components/CheckBox";
+import { useState } from "react";
+import { Link } from "react-router";
 
 const LoginPage = () => {
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
 
   const {
@@ -30,7 +35,7 @@ const LoginPage = () => {
     <div className="bg-bg-primary h-screen w-screen flex justify-center items-center">
       <form
         onSubmit={handleSubmit(loginUser)}
-        className="w-10/12 flex flex-col gap-5"
+        className="w-10/12 flex flex-col gap-5 max-w-sm"
       >
         <div className="size-10 rounded-xl bg-primary grid place-items-center">
           <Table2Icon className="text-text-accent size-5" />
@@ -59,16 +64,27 @@ const LoginPage = () => {
               key={i}
               label={t(label)}
               placeholder={t(placeholder)}
-              type={type}
+              type={
+                name === "password"
+                  ? showPassword
+                    ? "text"
+                    : "password"
+                  : type
+              }
               error={error && t(error)}
               icon={
                 type === "password" && (
                   <Button
                     size="icon"
                     variant="ghost"
+                    onClick={() => setShowPassword(!showPassword)}
                     className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-transparent outline-none focus-visible:border-none"
                   >
-                    <EyeIcon className="size-5 text-text-foreground-1" />
+                    {showPassword ? (
+                      <EyeOffIcon className="size-5 text-text-foreground-1" />
+                    ) : (
+                      <EyeIcon className="size-5 text-text-foreground-1" />
+                    )}
                   </Button>
                 )
               }
@@ -76,7 +92,30 @@ const LoginPage = () => {
             />
           );
         })}
+        <div className="flex justify-between">
+          <div
+            className="flex gap-3"
+            onClick={() => setRememberMe(!rememberMe)}
+          >
+            <CheckBox checked={rememberMe} setChecked={setRememberMe} />
+            <p className="text-sm text-text-foreground-1">
+              {t("Login.remember")}
+            </p>
+          </div>
+          <Link
+            to="/forgot-password"
+            className="text-sm text-primary font-medium"
+          >
+            {t("Login.forgotPassword")}
+          </Link>
+        </div>
         <Button type="submit">{t("Login.buttons.submit")}</Button>
+        <p className="text-sm text-text-foreground-1 text-center">
+          {t("Login.register.question")}
+          <Link to="/register" className="text-primary font-medium">
+            {t("Login.register.link")}
+          </Link>
+        </p>
       </form>
     </div>
   );
