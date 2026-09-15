@@ -1,0 +1,36 @@
+{
+  "Login": {
+    "title": "Bienvenido de nuevo",
+    "subtitle": "Ingresa para acceder a tu tienda",
+    "buttons": {
+      "google": "Ingresa con Google",
+      "submit": "Ingresar"
+    },
+    "register": {
+      "question": "¿No tienes una cuenta?",
+      "link": "Regístrate"
+    },
+    "or": "O ingresa con",
+    "remember": "Recuérdame",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "form": {
+      "fields": {
+        "email": {
+          "placeholder": "correo@gmail.com",
+          "label": "Correo",
+          "errors": {
+            "required": "El correo es requerido",
+            "email": "El correo debe ser válido"
+          }
+        },
+        "password": {
+          "placeholder": "***********",
+          "label": "Contraseña",
+          "errors": {
+            "required": "La contraseña es requerida"
+          }
+        }
+      }
+    }
+  }
+}

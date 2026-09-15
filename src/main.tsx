@@ -2,8 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
 import { router } from "./routes.tsx";
-import "@/styles/main.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@/i18n";
+import "@/styles/main.css";
+import "@fontsource-variable/inter/wght.css";
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
