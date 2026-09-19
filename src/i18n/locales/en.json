@@ -1,1 +1,47 @@
-{}
+{
+  "Onboarding": {
+    "logout": "Log out",
+    "progressLabel": "Setup progress",
+    "stepOf": "Step {{current}} of {{total}}",
+    "title": "Set up your store",
+    "subtitle": "We collect the essentials to personalize the system for your operation.",
+    "helper": "You can change all of this later from Settings.",
+    "steps": {
+      "store": "Store",
+      "categories": "Categories",
+      "alerts": "Alerts",
+      "products": "Products"
+    },
+    "businessTypes": {
+      "retail": "Retail",
+      "restaurant": "Restaurant",
+      "pharmacy": "Pharmacy",
+      "ecommerce": "Ecommerce",
+      "bakery": "Bakery",
+      "hardware": "Hardware",
+      "technology": "Technology",
+      "boutique": "Boutique",
+      "bookstore": "Bookstore",
+      "other": "Other"
+    },
+    "form": {
+      "uploadLogo": "Upload store logo",
+      "storeName": "Store name",
+      "storeNamePlaceholder": "E.g. Cafe Bistro, North Store, Lima Boutique ...",
+      "storeNameHint": "It will appear in reports, tickets, and the system header.",
+      "businessType": "Business type",
+      "optionalModules": "Optional modules",
+      "suppliesTitle": "Supply management",
+      "suppliesDescription": "Enable this if your business makes products or consumes raw materials. It lets you record inputs, control stock, and cost recipes.",
+      "suppliesTag": "Products only",
+      "currency": "Currency",
+      "currencyValue": "Peruvian Sol - PEN",
+      "country": "Country",
+      "countryValue": "Peru",
+      "timezone": "Time zone",
+      "timezoneValue": "America / Lima",
+      "requiredHint": "You can complete this later",
+      "continue": "Continue"
+    }
+  }
+}

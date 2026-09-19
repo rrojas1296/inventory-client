@@ -101,5 +101,50 @@
         }
       }
     }
+  },
+  "Onboarding": {
+    "logout": "Salir",
+    "progressLabel": "Progreso de configuración",
+    "stepOf": "Paso {{current}} de {{total}}",
+    "title": "Configura tu tienda",
+    "subtitle": "Recopilamos lo esencial para personalizar todo el sistema a tu operación.",
+    "helper": "Podrás cambiar todo esto más adelante desde Configuración.",
+    "steps": {
+      "store": "Tienda",
+      "categories": "Categorías",
+      "alerts": "Alertas",
+      "products": "Productos"
+    },
+    "businessTypes": {
+      "retail": "Retail",
+      "restaurant": "Restaurante",
+      "pharmacy": "Farmacia",
+      "ecommerce": "Ecommerce",
+      "bakery": "Pastelería",
+      "hardware": "Ferretería",
+      "technology": "Tecnología",
+      "boutique": "Boutique",
+      "bookstore": "Librería",
+      "other": "Otro"
+    },
+    "form": {
+      "uploadLogo": "Subir logo de la tienda",
+      "storeName": "Nombre de la tienda",
+      "storeNamePlaceholder": "Ej. Cafe Bistro, Tienda Norte, Boutique Lima ...",
+      "storeNameHint": "Aparecerá en reportes, tickets y en la cabecera del sistema.",
+      "businessType": "Tipo de negocio",
+      "optionalModules": "Módulos opcionales",
+      "suppliesTitle": "Gestión de suministros",
+      "suppliesDescription": "Actívalo si tu negocio elabora productos o consume materia prima. Te permitirá registrar entradas, controlar stock y costear recetas.",
+      "suppliesTag": "Solo Productos",
+      "currency": "Moneda",
+      "currencyValue": "Sol Peruano - PEN",
+      "country": "País",
+      "countryValue": "Perú",
+      "timezone": "Zona Horaria",
+      "timezoneValue": "America / Lima",
+      "requiredHint": "Puedes completar esto después",
+      "continue": "Continuar"
+    }
   }
 }
