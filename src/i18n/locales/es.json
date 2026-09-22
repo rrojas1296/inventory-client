@@ -128,6 +128,20 @@
       "other": "Otro"
     },
     "form": {
+      "fields": {
+        "currency": {
+          "label": "Moneda",
+          "placeholder": "Sol Peruano - PEN"
+        },
+        "country": {
+          "label": "País",
+          "placeholder": "Seleccione un país"
+        },
+        "timezone": {
+          "label": "Zona horaria",
+          "placeholder": "Seleccione una zona horaria"
+        }
+      },
       "uploadLogo": "Subir logo de la tienda",
       "storeName": "Nombre de la tienda",
       "storeNamePlaceholder": "Ej. Cafe Bistro, Tienda Norte, Boutique Lima ...",
@@ -137,7 +151,6 @@
       "suppliesTitle": "Gestión de suministros",
       "suppliesDescription": "Actívalo si tu negocio elabora productos o consume materia prima. Te permitirá registrar entradas, controlar stock y costear recetas.",
       "suppliesTag": "Solo Productos",
-      "currency": "Moneda",
       "currencyValue": "Sol Peruano - PEN",
       "country": "País",
       "countryValue": "Perú",

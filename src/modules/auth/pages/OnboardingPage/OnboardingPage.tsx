@@ -1,10 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
   Bell,
   Box,
-  ChevronDown,
   CircleHelp,
   Ellipsis,
   FileText,
@@ -26,7 +25,15 @@ import Button from "@/modules/shared/components/shadcn/button";
 import Input from "@/modules/shared/components/Input";
 import { cn } from "cn";
 import FormField from "@/modules/shared/components/FormField";
-import { onboardingCurrencyOptions } from "../../utils/constants";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  onboarding1Schema,
+  type Onboarding1Schema,
+} from "../../schemas/onboarding/step1Schema";
+import { onboardingCurrencyOptions } from "../../utils/currencies";
+import { onboardingTimezoneOptions } from "../../utils/timezones";
+import { onboardingCountryOptions } from "../../utils/countries";
 
 type BusinessType = {
   id: string;
@@ -56,12 +63,33 @@ const steps = [
 const OnboardingPage = () => {
   const { t } = useTranslation();
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const [storeName, setStoreName] = useState("");
-  const [businessType, setBusinessType] = useState("retail");
-  const [suppliesEnabled, setSuppliesEnabled] = useState(false);
 
+  const { control, register, setValue, watch, handleSubmit } = useForm({
+    resolver: zodResolver(onboarding1Schema),
+    defaultValues: {
+      storeType: "retail",
+      suppliesEnabled: false,
+      storeCountry: "Peru",
+      storeCurrency: "PEN",
+      storeTimezone: "America/Lima",
+    },
+  });
+  const storeType = watch("storeType");
+  const suppliesEnabled = watch("suppliesEnabled");
+  const storeImage = watch("storeImage");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const previewUrl = URL.createObjectURL(file);
+    setValue("storeImage", previewUrl);
+  };
   const openFile = () => {
     inputFileRef.current?.click();
+  };
+
+  const onSubmit = (data: Onboarding1Schema) => {
+    console.log({ data });
   };
 
   return (
@@ -143,24 +171,36 @@ const OnboardingPage = () => {
             <button
               type="button"
               aria-label={t("Onboarding.form.uploadLogo")}
-              className="group grid size-20 shrink-0 place-items-center rounded-2xl border border-dashed border-border-input bg-bg-primary/35 text-text-foreground-2 transition-colors hover:border-primary hover:text-primary"
+              className="group grid size-20 overflow-hidden shrink-0 place-items-center rounded-2xl border border-dashed border-border-input bg-bg-primary/35 text-text-foreground-2 transition-colors hover:border-primary hover:text-primary"
               onClick={openFile}
             >
-              <div className="flex flex-col items-center gap-1">
-                <Upload className="size-5 transition-transform group-hover:-translate-y-0.5" />
-                <span className="text-sm">Logo</span>
-              </div>
+              {storeImage ? (
+                <img
+                  src={storeImage}
+                  className="h-full w-full block rounded-2xl object-cover"
+                />
+              ) : (
+                <div className="flex flex-col items-center gap-1">
+                  <Upload className="size-5 transition-transform group-hover:-translate-y-0.5" />
+                  <span className="text-sm">Logo</span>
+                </div>
+              )}
             </button>
-            <input type="file" hidden ref={inputFileRef} />
+            <input
+              type="file"
+              onChange={handleFileChange}
+              hidden
+              accept="image/*"
+              ref={inputFileRef}
+            />
             <label className="min-w-0 flex-1 text-sm text-text-foreground-1">
               <span className="mb-1 block">
                 {t("Onboarding.form.storeName")}
               </span>
               <Input
-                value={storeName}
-                onChange={(event) => setStoreName(event.target.value)}
                 placeholder={t("Onboarding.form.storeNamePlaceholder")}
                 className="w-full rounded-xl border border-border-input bg-transparent px-3 text-sm text-text-foreground-1 outline-none transition-colors placeholder:text-text-foreground-2 focus:border-primary focus:ring-3 focus:ring-primary/50"
+                {...register("storeName")}
               />
               <span className="mt-1 block text-xs text-text-foreground-2">
                 {t("Onboarding.form.storeNameHint")}
@@ -174,13 +214,13 @@ const OnboardingPage = () => {
             </legend>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
               {businessTypes.map(({ id, icon: Icon }) => {
-                const selected = businessType === id;
+                const selected = storeType === id;
                 return (
                   <button
                     key={id}
                     type="button"
                     aria-pressed={selected}
-                    onClick={() => setBusinessType(id)}
+                    onClick={() => setValue("storeType", id)}
                     className={`flex py-3 flex-col items-center justify-center gap-2 rounded-xl border text-sm transition-all ${
                       selected
                         ? "border-primary bg-bg-selected text-primary shadow-[inset_0_0_0_1px_rgba(115,36,241,0.16)]"
@@ -202,8 +242,9 @@ const OnboardingPage = () => {
             <button
               type="button"
               role="switch"
-              aria-checked={suppliesEnabled}
-              onClick={() => setSuppliesEnabled((enabled) => !enabled)}
+              onClick={() => {
+                setValue("suppliesEnabled", !suppliesEnabled);
+              }}
               className={cn(
                 "flex w-full outline-none items-center gap-3 rounded-2xl border border-border-card bg-bg-primary/25 py-3 px-4 text-left transition-colors",
                 suppliesEnabled && "border-primary bg-bg-selected",
@@ -244,44 +285,43 @@ const OnboardingPage = () => {
             </button>
           </div>
 
-          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="my-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormField
-              label={t("Onboarding.form.currency")}
+              label={t("Onboarding.form.fields.currency.label")}
               type="select"
+              control={control}
+              name="storeCurrency"
               options={onboardingCurrencyOptions}
-              placeholder={t("Onboarding.form.currencyPlaceholder")}
+              placeholder={t("Onboarding.form.fields.currency.placeholder")}
             />
-            <label className="text-xs text-text-foreground-2">
-              <span className="mb-1.5 block">
-                {t("Onboarding.form.country")}
-              </span>
-              <span className="relative block">
-                <select className="h-9 w-full appearance-none rounded-xl border border-border-input bg-transparent px-3 pr-9 text-sm text-text-foreground-1 outline-none focus:border-primary focus:ring-3 focus:ring-primary/50">
-                  <option>{t("Onboarding.form.countryValue")}</option>
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-text-foreground-2" />
-              </span>
-            </label>
+            <FormField
+              label={t("Onboarding.form.fields.country.label")}
+              type="select"
+              name="storeCountry"
+              control={control}
+              options={onboardingCountryOptions}
+              placeholder={t("Onboarding.form.fields.country.placeholder")}
+            />
           </div>
+          <FormField
+            label={t("Onboarding.form.fields.timezone.label")}
+            type="select"
+            name="storeTimezone"
+            control={control}
+            options={onboardingTimezoneOptions}
+            placeholder={t("Onboarding.form.fields.timezone.placeholder")}
+          />
 
-          <label className="mt-4 block text-xs text-text-foreground-2">
-            <span className="mb-1.5 block">
-              {t("Onboarding.form.timezone")}
-            </span>
-            <span className="relative block">
-              <select className="h-9 w-full appearance-none rounded-xl border border-border-input bg-transparent px-3 pr-9 text-sm text-text-foreground-1 outline-none focus:border-primary focus:ring-3 focus:ring-primary/50">
-                <option>{t("Onboarding.form.timezoneValue")}</option>
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-text-foreground-2" />
-            </span>
-          </label>
-
-          <div className="mt-4 flex items-center justify-between gap-3">
+          <div className="mt-5 flex items-center justify-between gap-3">
             <span className="hidden items-center gap-1.5 text-[11px] text-text-foreground-2 sm:flex">
               <CircleHelp className="size-3.5" />
               {t("Onboarding.form.requiredHint")}
             </span>
-            <Button type="button" className="ml-auto gap-2">
+            <Button
+              type="button"
+              onClick={handleSubmit(onSubmit)}
+              className="ml-auto gap-2"
+            >
               {t("Onboarding.form.continue")}
               <ArrowRight className="size-4" />
             </Button>

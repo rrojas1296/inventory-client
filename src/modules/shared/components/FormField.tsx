@@ -8,21 +8,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./shadcn/select";
-import type { SelectOption } from "../types/formField";
+import type { FormFieldType, SelectOption } from "../types/formField";
+import { Controller } from "react-hook-form";
 
 interface Props extends ComponentProps<"input"> {
   label: string;
   placeholder: string;
+  type: FormFieldType;
+  control?: any;
   icon?: React.ReactNode;
-  type: ComponentProps<"input">["type"];
   error?: string;
   options?: SelectOption[];
 }
+
 const FormField = ({
   label,
   type,
   icon,
   options,
+  control,
   error,
   className,
   ...props
@@ -31,20 +35,33 @@ const FormField = ({
     switch (type) {
       case "select":
         return (
-          <Select modal={true} items={options}>
-            <SelectTrigger value={props.value}>
-              <SelectValue placeholder={props.placeholder} />
-            </SelectTrigger>
-            <SelectContent>
-              {options?.map(({ value, label }) => {
-                return (
-                  <SelectItem key={label} value={value}>
-                    {label}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
+          <Controller
+            name={props.name ?? ""}
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <Select
+                  onValueChange={onChange}
+                  value={value ?? ""}
+                  modal={true}
+                  items={options}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={props.placeholder} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {options?.map(({ value, label }) => {
+                      return (
+                        <SelectItem key={label} value={value}>
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              );
+            }}
+          />
         );
       default:
         return <Input type={type} icon={icon} {...props} />;
