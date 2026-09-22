@@ -25,6 +25,8 @@ import type { LucideIcon } from "lucide-react";
 import Button from "@/modules/shared/components/shadcn/button";
 import Input from "@/modules/shared/components/Input";
 import { cn } from "cn";
+import FormField from "@/modules/shared/components/FormField";
+import { onboardingCurrencyOptions } from "../../utils/constants";
 
 type BusinessType = {
   id: string;
@@ -243,17 +245,12 @@ const OnboardingPage = () => {
           </div>
 
           <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <label className="text-xs text-text-foreground-2">
-              <span className="mb-1.5 block">
-                {t("Onboarding.form.currency")}
-              </span>
-              <span className="relative block">
-                <select className="h-9 w-full appearance-none rounded-xl border border-border-input bg-transparent px-3 pr-9 text-sm text-text-foreground-1 outline-none focus:border-primary focus:ring-3 focus:ring-primary/50">
-                  <option>{t("Onboarding.form.currencyValue")}</option>
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-text-foreground-2" />
-              </span>
-            </label>
+            <FormField
+              label={t("Onboarding.form.currency")}
+              type="select"
+              options={onboardingCurrencyOptions}
+              placeholder={t("Onboarding.form.currencyPlaceholder")}
+            />
             <label className="text-xs text-text-foreground-2">
               <span className="mb-1.5 block">
                 {t("Onboarding.form.country")}

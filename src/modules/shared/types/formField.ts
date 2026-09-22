@@ -7,3 +7,8 @@ export interface FormField<T> {
   className?: string;
   type: ComponentProps<"input">["type"];
 }
+
+export interface SelectOption {
+  value: string;
+  label: string;
+}
